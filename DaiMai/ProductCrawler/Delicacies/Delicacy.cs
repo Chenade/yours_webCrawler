@@ -14,11 +14,13 @@ namespace ProductCrawler.Delicacies
 
         public List<string> DataList = new List<string>();
 
+        private int _start = 0;
         private int _count = 0;
 
-        public Delicacy(int count)
+        public Delicacy(int start, int end)
         {
-            _count = count;
+            _count = end - start + 1;
+            _start = start;
         }
 
         public async Task Get()
@@ -29,7 +31,7 @@ namespace ProductCrawler.Delicacies
 
             for (var id = 0; id < _count; id++)
             {
-                string url = this.URL + (id + 1).ToString();
+                string url = this.URL + (_start + id + 1).ToString();
 
                 var responseMessage = await httpClient.GetAsync(url);
 
@@ -41,7 +43,7 @@ namespace ProductCrawler.Delicacies
 
                     if (jsonObject.ContainsKey("data"))
                     {
-                        Console.WriteLine(jsonObject["data"]["company_name"].ToString() + ':' + (id + 1));
+                        // Console.WriteLine(jsonObject["data"]["company_name"].ToString() + ':' + (id + 1));
                         string data = jsonObject["data"].ToString();
                         DataList.Add(data);
                     }
