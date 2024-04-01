@@ -1,0 +1,175 @@
+[{
+  "id": 1,
+  "company_id": 2,
+  "company_name": "炸雞王子",
+  "company_slug": "friedchicken",
+  "name": "炸雞王子(一號店)",
+  "slug": "no1",
+  "address": "桃園市龍潭區東龍路58-9號B室",
+  "available_methods": [
+    "可自取"
+  ],
+  "business_hours": [
+    "全日 12:30~23:30"
+  ],
+  "order_hours": [
+    "全日 12:30~23:00"
+  ],
+  "order_phone": "0921185844",
+  "line_link": "https://lin.ee/puJ7QrP",
+  "banner": "https://cdn.idelivery.com.tw/idelivery/company/image/sign/92f1bed1b88e8dde426418e3080d0750.jpg",
+  "logo": null,
+  "marketing": [],
+  "menu": [
+    {
+      "category_name": "飲品",
+      "items": [
+        {
+          "id": 343267,
+          "title": "雪碧",
+          "description": "",
+          "price": 25,
+          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/198cc2aef245bc9556605167c5b24e13.jpg"
+        },
+        {
+          "id": 343268,
+          "title": "可口可樂",
+          "description": "",
+          "price": 25,
+          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/6cc97d626445547dfc5e336fb539d46e.jpg"
+        },
+        {
+          "id": 343270,
+          "title": "原萃 日式綠茶",
+          "description": "",
+          "price": 30,
+          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/6b3fb437f601f2b54e381251841005c0.jpg"
+        },
+        {
+          "id": 392379,
+          "title": "飛想 檸檬紅茶",
+          "description": "",
+          "price": 30,
+          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/88d01287fc7a9baa1d31288c2a75353b.jpg"
+        },
+        {
+          "id": 938914,
+          "title": "美粒果",
+          "description": "",
+          "price": 30,
+          "img": ""
+        }
+      ]
+    },
+    {
+      "category_name": "炸雞王子 (新)",
+      "items": [
+        {
+          "id": 938882,
+          "title": "脆雞翅",
+          "description": "五隻比較便宜喔",
+          "price": 30,
+          "img": ""
+        },
+        {
+          "id": 938883,
+          "title": "嫩雞腿",
+          "description": "三隻比較便宜喔",
+          "price": 45,
+          "img": ""
+        },
+        {
+          "id": 938884,
+          "title": "王子雞排",
+          "description": "",
+          "price": 75,
+          "img": ""
+        },
+        {
+          "id": 938885,
+          "title": "酥腿排",
+          "description": "又稱腿塊",
+          "price": 35,
+          "img": ""
+        },
+        {
+          "id": 938886,
+          "title": "蒜香鹹酥雞",
+          "description": "使用蒜頭去醃製 吃得出蒜香的好滋味",
+          "price": 60,
+          "img": ""
+        },
+        {
+          "id": 938887,
+          "title": "豬血糕",
+          "description": "",
+          "price": 40,
+          "img": ""
+        },
+        {
+          "id": 938888,
+          "title": "花枝丸",
+          "description": "",
+          "price": 45,
+          "img": ""
+        },
+        {
+          "id": 938889,
+          "title": "四季豆",
+          "description": "",
+          "price": 35,
+          "img": ""
+        },
+        {
+          "id": 938890,
+          "title": "百頁豆腐",
+          "description": "",
+          "price": 40,
+          "img": ""
+        },
+        {
+          "id": 938891,
+          "title": "雞蛋豆腐",
+          "description": "",
+          "price": 45,
+          "img": ""
+        },
+        {
+          "id": 938892,
+          "title": "甜不辣",
+          "description": "",
+          "price": 40,
+          "img": ""
+        },
+        {
+          "id": 938893,
+          "title": "馬鈴薯條",
+          "description": "小朋友最喜歡的",
+          "price": 40,
+          "img": ""
+        },
+        {
+          "id": 938894,
+          "title": "甘梅地瓜",
+          "description": "新鮮好吃的台農57號地瓜",
+          "price": 40,
+          "img": ""
+        },
+        {
+          "id": 938895,
+          "title": "月亮蝦餅",
+          "description": "",
+          "price": 50,
+          "img": ""
+        },
+        {
+          "id": 938897,
+          "title": "柳葉魚",
+          "description": "",
+          "price": 65,
+          "img": ""
+        }
+      ]
+    }
+  ]
+}]

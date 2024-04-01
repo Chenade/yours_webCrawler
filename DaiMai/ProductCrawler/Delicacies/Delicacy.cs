@@ -14,11 +14,11 @@ namespace ProductCrawler.Delicacies
 
         public List<string> DataList = new List<string>();
 
-        private int _id = 0;
+        private int _count = 0;
 
-        public Delicacy(int id)
+        public Delicacy(int count)
         {
-            _id = id;
+            _count = count;
         }
 
         public async Task Get()
@@ -27,9 +27,9 @@ namespace ProductCrawler.Delicacies
 
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "NzJhMDZiMzE0NWU0NDlkMGY0ZDMzYTJiMTE5OTYzMGQ0YmU1M2M1ZA==");
 
-            for (var i = 0; i < _id; i++)
+            for (var id = 0; id < _count; id++)
             {
-                string url = this.URL + (i + 1).ToString();
+                string url = this.URL + (id + 1).ToString();
 
                 var responseMessage = await httpClient.GetAsync(url);
 
@@ -41,7 +41,7 @@ namespace ProductCrawler.Delicacies
 
                     if (jsonObject.ContainsKey("data"))
                     {
-                        Console.WriteLine(jsonObject["data"]["company_name"].ToString() + ':' + (i + 1));
+                        Console.WriteLine(jsonObject["data"]["company_name"].ToString() + ':' + (id + 1));
                         string data = jsonObject["data"].ToString();
                         DataList.Add(data);
                     }
