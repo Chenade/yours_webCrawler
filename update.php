@@ -17,8 +17,8 @@ function connectToDatabase() {
 
 function insertRestaurant($conn, $data) {
     $name = $data['name'];
+    $name = mysqli_real_escape_string($conn, $name);
 
-    // Check if restaurant with the same name already exists
     $check_query = "SELECT * FROM `restaurant` WHERE `name` = '$name'";
     $check_result = $conn->query($check_query);
 
@@ -42,7 +42,7 @@ function insertRestaurant($conn, $data) {
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO `restaurant`(`id`, `name`, `lat`, `lng`, `area`, `address`, `tel`, `email`, `thumbnailImageUrl`, `url_order`, `url_line`, `google_map_url`, `note`, `created_at`, `updated_at`) VALUES ('$id', '$name', '$lat', '$lng', '$area', '$address', '$tel', '$email', '$thumbnailImageUrl', '$url_order', '$url_line', '$google_map_url', '$note', '$created_at', '$updated_at')";
+    $sql = "INSERT INTO `restaurant`(`name`, `lat`, `lng`, `area`, `address`, `tel`, `email`, `thumbnailImageUrl`, `url_order`, `url_line`, `google_map_url`, `note`, `created_at`, `updated_at`) VALUES ('$name', '$lat', '$lng', '$area', '$address', '$tel', '$email', '$thumbnailImageUrl', '$url_order', '$url_line', '$google_map_url', '$note', '$created_at', '$updated_at')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully for restaurant $name\n";
@@ -62,11 +62,12 @@ function insertMeals($conn, $restaurant_id, $menu) {
             $id = $item['id'];
             $name = $item['title'];
             $price = $item['price'];
+            $img = key_exists('img', $item) ? $item['img'] : null;
             $description = key_exists('description', $item) ? $item['description'] : null;
             $created_at = date('Y-m-d H:i:s');
             $updated_at = date('Y-m-d H:i:s');
 
-            $sql = "INSERT INTO `meals`(`id`, `rid`, `tag`, `name`, `price`, `description`, `created_at`, `updated_at`) VALUES ('$id', '$restaurant_id', '$tag', '$name', '$price', '$description', '$created_at', '$updated_at')";
+            $sql = "INSERT INTO `meals`(`rid`, `tag`, `name`, `price`, `img`, `description`, `created_at`, `updated_at`) VALUES ('$restaurant_id', '$tag', '$name', '$price', '$img', '$description', '$created_at', '$updated_at')";
 
             if ($conn->query($sql) === TRUE) {
 
@@ -76,7 +77,7 @@ function insertMeals($conn, $restaurant_id, $menu) {
             }
         }
     }
-    echo "New record created successfully for meal $name\n";
+    echo "New record created successfully for meal\n";
 }
 
 // Main script
