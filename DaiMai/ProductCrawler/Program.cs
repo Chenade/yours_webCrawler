@@ -9,10 +9,9 @@ namespace ProductCrawler
 {
     class Program
     {
-        static async Task Main(int args, string[] argv)
+        static async Task Main(string[] argv)
         {
-            Console.WriteLine("請輸入產品總比數:");
-
+            int args = argv.Length;
             if (args != 2)
             {
                 Console.WriteLine("Argment Error");
