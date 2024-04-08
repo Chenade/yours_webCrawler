@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,46 +7,72 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductCrawler.Delicacies
+namespace ProductWebCrawler.Delicacies
 {
     class Delicacy : ICrawler
     {
-        public string URL = "https://api.idelivery.com.tw/platform/storeinfo?id=";
+        public string URL = "https://api.idelivery.com.tw";
 
         public List<string> DataList = new List<string>();
 
-        private int _start = 0;
-        private int _count = 0;
+        private int _page = 0;
 
-        public Delicacy(int start, int end)
+        private int _limit = 20;
+
+        private HttpClient _httpClient;
+
+        public Delicacy(int page)
         {
-            _count = end - start + 1;
-            _start = start;
+            _page = page;
+            _httpClient = new HttpClient();
         }
 
         public async Task Get()
         {
-            HttpClient httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "NzJhMDZiMzE0NWU0NDlkMGY0ZDMzYTJiMTE5OTYzMGQ0YmU1M2M1ZA==");
 
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "NzJhMDZiMzE0NWU0NDlkMGY0ZDMzYTJiMTE5OTYzMGQ0YmU1M2M1ZA==");
+            string url = "";
 
-            for (var id = 0; id < _count; id++)
+            for (var page = 0; page < _page; page++)
             {
-                string url = this.URL + (_start + id + 1).ToString();
+                url = this.URL + "/platform/storelist?page=" + (page + 1).ToString() + "&limit=" + _limit;
 
-                var responseMessage = await httpClient.GetAsync(url);
+                Console.WriteLine(url);
 
-                if (responseMessage.IsSuccessStatusCode)
+                var responseStores = await _httpClient.GetAsync(url);
+
+                if (responseStores.IsSuccessStatusCode)
                 {
-                    var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                    var responseStoresContent = await responseStores.Content.ReadAsStringAsync();
+                    var responseStoresJsonObject = Newtonsoft.Json.Linq.JObject.Parse(responseStoresContent);
 
-                    var jsonObject = Newtonsoft.Json.Linq.JObject.Parse(responseContent);
-
-                    if (jsonObject.ContainsKey("data"))
+                    if (responseStoresJsonObject.ContainsKey("data"))
                     {
-                        // Console.WriteLine(jsonObject["data"]["company_name"].ToString() + ':' + (id + 1));
-                        string data = jsonObject["data"].ToString();
-                        DataList.Add(data);
+                        var stores = responseStoresJsonObject["data"]["stores"]["popular"];
+
+                        foreach(var store in stores)
+                        {
+                            var storeId = store["id"].ToString();
+
+                            var storeInfo = await GetStoreInfo(storeId);
+
+                            if (storeInfo.ContainsKey("data"))
+                            {
+                                Console.WriteLine(storeInfo["data"]["company_name"].ToString());
+
+                                var companyId = storeInfo["data"]["company_id"].ToString();
+                                var company = await GetCompany(companyId, storeId);
+
+                                if(company.ContainsKey("response"))
+                                {
+                                    storeInfo["data"]["company"] = company["response"];
+                                }
+
+                                string data = storeInfo["data"].ToString();
+
+                                DataList.Add(data);
+                            }
+                        }
                     }
                     else
                     {
@@ -53,6 +80,37 @@ namespace ProductCrawler.Delicacies
                     }
                 }
             }
+        }
+
+        public async Task<JObject> GetStoreInfo(string storeId)
+        {
+            var url = this.URL + "/platform/storeinfo?id=" + storeId;
+
+            var responseStoreInfo = await _httpClient.GetAsync(url);
+
+            if (responseStoreInfo.IsSuccessStatusCode)
+            {
+                var responseStoreInfoContent = await responseStoreInfo.Content.ReadAsStringAsync();
+                return Newtonsoft.Json.Linq.JObject.Parse(responseStoreInfoContent);
+            }
+
+            return new JObject();
+        }
+
+        public async Task<JObject> GetCompany(string companyId, string storeId)
+        {
+            var url = this.URL + "/company/" + companyId + "/config?lang=en&store_id=" + storeId + "&from=IMENU";
+
+            var responseCompany = await _httpClient.GetAsync(url);
+
+            if (responseCompany.IsSuccessStatusCode)
+            {
+                var responseCompanyContent = await responseCompany.Content.ReadAsStringAsync();
+
+                return Newtonsoft.Json.Linq.JObject.Parse(responseCompanyContent);
+            }
+
+            return new JObject();
         }
 
         public void GenerateFile()
