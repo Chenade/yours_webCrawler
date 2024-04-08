@@ -1,13 +1,16 @@
 <?php
 
+// Function to establish database connection
 function connectToDatabase() {
-    $servername = "localhost";
-    $username = "admin";
-    $password = "";
+    $servername = "db";
+    $username = "develop";
+    $password = "developer";
     $dbname = "yourshealth";
 
+    // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
 
+    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -15,73 +18,56 @@ function connectToDatabase() {
     return $conn;
 }
 
-function insertRestaurant($conn, $data) {
-    $name = $data['name'];
-    $name = mysqli_real_escape_string($conn, $name);
+// Function to insert data into the 'meals' table
+function insertMeals($conn, $restaurant_id, $menu) {
+    foreach ($menu as $item) {
+        $tag = $item['category_name'];
+        $name = $item['title'];
+        $price = $item['price'];
+        $img = key_exists('img', $item) ? $item['img'] : null;
+        $description = key_exists('description', $item) ? $item['description'] : null;
+        $created_at = date('Y-m-d H:i:s');
+        $updated_at = date('Y-m-d H:i:s');
 
-    $check_query = "SELECT * FROM `restaurant` WHERE `name` = '$name'";
-    $check_result = $conn->query($check_query);
+        $sql = "INSERT INTO `meals`(`rid`, `tag`, `name`, `price`, `img`, `description`, `created_at`, `updated_at`) 
+                VALUES ('$restaurant_id', '$tag', '$name', '$price', '$img', '$description', '$created_at', '$updated_at')";
 
-    if ($check_result->num_rows > 0) {
-        echo "Restaurant with name '$name' already exists. Skipping insertion.\n";
-        return; 
+        if ($conn->query($sql) === TRUE) {
+            // Meal inserted successfully
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
+    echo "New records created successfully for meals\n";
+}
 
-    $id = $data['id'];
-    $lat = key_exists('lat', $data) ? $data['lat'] : null;
-    $lng = key_exists('lng', $data) ? $data['lng'] : null;
-    $area = key_exists('area', $data) ? $data['area'] : null;
-    $address = $data['address'];
-    $tel = key_exists('order_phone', $data) ? $data['order_phone'] : null;
-    $email = key_exists('email', $data) ? $data['email'] : null;
-    $thumbnailImageUrl = key_exists('banner', $data) ? $data['banner'] : null;
-    $url_order = "https://delicacy.maifood.com.tw/stores/$id";
-    $url_line = key_exists('line_link', $data) ? $data['line_link'] : null;
-    $google_map_url = key_exists('google_map_url', $data) ? $data['google_map_url'] : null;
-    $note = "daimei";
+// Function to insert data into the 'restaurant' table
+function insertRestaurant($conn, $restaurant) {
+    $name = mysqli_real_escape_string($conn, $restaurant['name']);
+    $business_registration = mysqli_real_escape_string($conn, $restaurant['business_registration']);
+    $uniform_numbers = mysqli_real_escape_string($conn, $restaurant['uniform_numbers']);
+    $address = mysqli_real_escape_string($conn, $restaurant['address']);
+    $tel = mysqli_real_escape_string($conn, $restaurant['tel']);
+    $url_order = mysqli_real_escape_string($conn, $restaurant['url_order']);
+    $service_hours_text = mysqli_real_escape_string($conn, $restaurant['service_hours_text']);
+    $announcement = mysqli_real_escape_string($conn, $restaurant['announcement']);
+    $delivery_rules = mysqli_real_escape_string($conn, $restaurant['delivery_rules']);
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO `restaurant`(`name`, `lat`, `lng`, `area`, `address`, `tel`, `email`, `thumbnailImageUrl`, `url_order`, `url_line`, `google_map_url`, `note`, `created_at`, `updated_at`) VALUES ('$name', '$lat', '$lng', '$area', '$address', '$tel', '$email', '$thumbnailImageUrl', '$url_order', '$url_line', '$google_map_url', '$note', '$created_at', '$updated_at')";
+    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`) 
+            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully for restaurant $name\n";
-        $restaurant_id = $conn->insert_id;
-        $menu = $data['menu'];
-        insertMeals($conn, $restaurant_id, $menu);
+        return $conn->insert_id;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+        return null;
     }
-}
-
-// Function to insert data into the 'meals' table
-function insertMeals($conn, $restaurant_id, $menu) {
-    foreach ($menu as $category) {
-        $tag = $category['category_name'];
-        foreach ($category['items'] as $item) {
-            $id = $item['id'];
-            $name = $item['title'];
-            $price = $item['price'];
-            $img = key_exists('img', $item) ? $item['img'] : null;
-            $description = key_exists('description', $item) ? $item['description'] : null;
-            $created_at = date('Y-m-d H:i:s');
-            $updated_at = date('Y-m-d H:i:s');
-
-            $sql = "INSERT INTO `meals`(`rid`, `tag`, `name`, `price`, `img`, `description`, `created_at`, `updated_at`) VALUES ('$restaurant_id', '$tag', '$name', '$price', '$img', '$description', '$created_at', '$updated_at')";
-
-            if ($conn->query($sql) === TRUE) {
-
-
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        }
-    }
-    echo "New record created successfully for meal\n";
 }
 
 // Main script
-$filename = "data.json";
+$filename = "converted_data.json";
 $jsonData = file_get_contents($filename);
 if ($jsonData === FALSE) {
     die("Error reading file $filename");
@@ -91,10 +77,17 @@ $data = json_decode($jsonData, true);
 $conn = connectToDatabase();
 
 foreach ($data as $restaurant) {
-    insertRestaurant($conn, $restaurant);
+    // Insert restaurant
+    $restaurant_id = insertRestaurant($conn, $restaurant);
+
+    if ($restaurant_id !== null) {
+        // Insert meals for the restaurant
+        insertMeals($conn, $restaurant_id, $restaurant['menu']);
+    }
 }
 
 $conn->close();
 
 echo "Done\n";
+
 ?>
