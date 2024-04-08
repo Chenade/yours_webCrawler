@@ -28,7 +28,7 @@ function parse($platform)
 
         $menu = [];
         foreach ($item['menu'] as $item) {
-            $tag = $menu_item['category_name'];
+            $tag = $item['category_name'];
             $name = $item['name'];
             $price = $item['price'];
             $img = key_exists('food_image_url', $item) ? $item['food_image_url'] : null;
