@@ -1,175 +1,186 @@
 [{
-  "id": 1,
-  "company_id": 2,
-  "company_name": "炸雞王子",
-  "company_slug": "friedchicken",
-  "name": "炸雞王子(一號店)",
-  "slug": "no1",
-  "address": "桃園市龍潭區東龍路58-9號B室",
+  "id": 7741,
+  "company_id": 3359,
+  "company_name": "三十茶(平鎮南勢店)",
+  "company_slug": "30Teapingzhen",
+  "name": "三十茶(平鎮南勢店)",
+  "slug": "30Tea_pz",
+  "address": "桃園市平鎮區中豐路南勢二段113號",
   "available_methods": [
-    "可自取"
+    "可自取",
+    "可外送"
   ],
   "business_hours": [
-    "全日 12:30~23:30"
+    "全日 11:00~22:00"
   ],
   "order_hours": [
-    "全日 12:30~23:00"
+    "全日 00:00~23:59"
   ],
-  "order_phone": "0921185844",
-  "line_link": "https://lin.ee/puJ7QrP",
-  "banner": "https://cdn.idelivery.com.tw/idelivery/company/image/sign/92f1bed1b88e8dde426418e3080d0750.jpg",
+  "order_phone": "034031602",
+  "line_link": "https://lin.ee/TpQD50b",
+  "banner": null,
   "logo": null,
   "marketing": [],
-  "menu": [
-    {
-      "category_name": "飲品",
-      "items": [
-        {
-          "id": 343267,
-          "title": "雪碧",
-          "description": "",
-          "price": 25,
-          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/198cc2aef245bc9556605167c5b24e13.jpg"
+  "menu": [],
+  "company": {
+    "is_online_order": true,
+    "is_birthday_require": false,
+    "is_asia_miles_enable": false,
+    "earn_points_type": 1,
+    "branch_disp_mode": null,
+    "disp_mode_style": null,
+    "list": [
+      {
+        "id": 7741,
+        "company_id": 3359,
+        "name": "三十茶(平鎮南勢店)",
+        "slug": "30Tea_pz",
+        "img_url": "",
+        "logo_url": "",
+        "address": "桃園市平鎮區中豐路南勢二段113號",
+        "display_address": "桃園市平鎮區中豐路南勢二段113號",
+        "phone": "034031602",
+        "service_hours_text": "Everyday 11:00~22:00",
+        "order_hours_text": "Everyday 00:00~23:59",
+        "is_post_checkout": false,
+        "is_available_for_order": true,
+        "online_order_status": 1,
+        "is_member_enable": true,
+        "is_qrorder_enable": false,
+        "is_qrorder_notify_member_login": false,
+        "is_point_coupon_enable": true,
+        "is_point_coupon_point_enable": false,
+        "is_wallet_enable": false,
+        "is_only_maicard": false,
+        "is_auto_confirm": false,
+        "is_imenu_available": true,
+        "is_service_charge_enable": false,
+        "is_order_comment_enable": true,
+        "is_registration_display": true,
+        "business_registration": "浩澐茶行",
+        "uniform_numbers": "95006573",
+        "pre_order_days": 1,
+        "tables": [],
+        "pickup": {
+          "take_out": {
+            "id": 2,
+            "text": "Pickup",
+            "description": "來店自取顧客，請於取餐前15分鐘成立訂單，若有需註明事項請標註於『備註』欄中。",
+            "prepare_time": 15,
+            "disposable_tableware": false,
+            "show_store_table": false,
+            "payments": [
+              {
+                "id": 8287,
+                "gateway_code": "cash",
+                "method_code": "1",
+                "require": {
+                  "purchase_email": false
+                },
+                "text": "Cash",
+                "invoice_type": "none",
+                "invoice_enable": false
+              }
+            ],
+            "conditions": [],
+            "cash_amount_upper_limit": 0
+          },
+          "delivery": {
+            "id": 1,
+            "text": "Delivery",
+            "description": "外送餐點請確認個人聯絡資料是否正確，並且於外送前60分鐘成立訂單，若有需註明事項請標註於『備註』欄中。\r\n0-2 公里：$300\r\n2-3 公里：$350\r\n3-4公里：$400\r\n4-5公里：$500\r\n*外送需自行加購塑膠提袋",
+            "prepare_time": 60,
+            "disposable_tableware": false,
+            "show_store_table": false,
+            "payments": [
+              {
+                "id": 8287,
+                "gateway_code": "cash",
+                "method_code": "1",
+                "require": {
+                  "purchase_email": false
+                },
+                "text": "Cash",
+                "invoice_type": "none",
+                "invoice_enable": false
+              }
+            ],
+            "conditions": [
+              {
+                "is_enable": true,
+                "shipping_fee": 0,
+                "start_distance": 0,
+                "end_distance": 2,
+                "type": "amount",
+                "value": 300
+              },
+              {
+                "is_enable": true,
+                "shipping_fee": 0,
+                "start_distance": 2,
+                "end_distance": 3,
+                "type": "amount",
+                "value": 350
+              },
+              {
+                "is_enable": true,
+                "shipping_fee": 0,
+                "start_distance": 3,
+                "end_distance": 4,
+                "type": "amount",
+                "value": 400
+              },
+              {
+                "is_enable": true,
+                "shipping_fee": 0,
+                "start_distance": 4,
+                "end_distance": 5,
+                "type": "amount",
+                "value": 500
+              }
+            ],
+            "cash_amount_upper_limit": 0,
+            "upper_limit": {
+              "is_enabled": false,
+              "type": "",
+              "value": ""
+            }
+          }
         },
-        {
-          "id": 343268,
-          "title": "可口可樂",
-          "description": "",
-          "price": 25,
-          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/6cc97d626445547dfc5e336fb539d46e.jpg"
-        },
-        {
-          "id": 343270,
-          "title": "原萃 日式綠茶",
-          "description": "",
-          "price": 30,
-          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/6b3fb437f601f2b54e381251841005c0.jpg"
-        },
-        {
-          "id": 392379,
-          "title": "飛想 檸檬紅茶",
-          "description": "",
-          "price": 30,
-          "img": "https://cdn.idelivery.com.tw/store/image/menu_item/1/88d01287fc7a9baa1d31288c2a75353b.jpg"
-        },
-        {
-          "id": 938914,
-          "title": "美粒果",
-          "description": "",
-          "price": 30,
-          "img": ""
+        "stimulus_voucher_notice": false,
+        "distance": -1,
+        "announcement": {
+          "status": 0,
+          "content_info": null,
+          "image": null,
+          "image_position": 1,
+          "updated_at": null
         }
-      ]
-    },
-    {
-      "category_name": "炸雞王子 (新)",
-      "items": [
-        {
-          "id": 938882,
-          "title": "脆雞翅",
-          "description": "五隻比較便宜喔",
-          "price": 30,
-          "img": ""
-        },
-        {
-          "id": 938883,
-          "title": "嫩雞腿",
-          "description": "三隻比較便宜喔",
-          "price": 45,
-          "img": ""
-        },
-        {
-          "id": 938884,
-          "title": "王子雞排",
-          "description": "",
-          "price": 75,
-          "img": ""
-        },
-        {
-          "id": 938885,
-          "title": "酥腿排",
-          "description": "又稱腿塊",
-          "price": 35,
-          "img": ""
-        },
-        {
-          "id": 938886,
-          "title": "蒜香鹹酥雞",
-          "description": "使用蒜頭去醃製 吃得出蒜香的好滋味",
-          "price": 60,
-          "img": ""
-        },
-        {
-          "id": 938887,
-          "title": "豬血糕",
-          "description": "",
-          "price": 40,
-          "img": ""
-        },
-        {
-          "id": 938888,
-          "title": "花枝丸",
-          "description": "",
-          "price": 45,
-          "img": ""
-        },
-        {
-          "id": 938889,
-          "title": "四季豆",
-          "description": "",
-          "price": 35,
-          "img": ""
-        },
-        {
-          "id": 938890,
-          "title": "百頁豆腐",
-          "description": "",
-          "price": 40,
-          "img": ""
-        },
-        {
-          "id": 938891,
-          "title": "雞蛋豆腐",
-          "description": "",
-          "price": 45,
-          "img": ""
-        },
-        {
-          "id": 938892,
-          "title": "甜不辣",
-          "description": "",
-          "price": 40,
-          "img": ""
-        },
-        {
-          "id": 938893,
-          "title": "馬鈴薯條",
-          "description": "小朋友最喜歡的",
-          "price": 40,
-          "img": ""
-        },
-        {
-          "id": 938894,
-          "title": "甘梅地瓜",
-          "description": "新鮮好吃的台農57號地瓜",
-          "price": 40,
-          "img": ""
-        },
-        {
-          "id": 938895,
-          "title": "月亮蝦餅",
-          "description": "",
-          "price": 50,
-          "img": ""
-        },
-        {
-          "id": 938897,
-          "title": "柳葉魚",
-          "description": "",
-          "price": 65,
-          "img": ""
-        }
-      ]
-    }
-  ]
+      }
+    ]
+  }
+}]
+
+[{
+  "name":"",
+  "business_registration": "", // company.list.business_registration
+  "uniform_numbers": "", // company.list.uniform_numbers
+  "lat":"",
+  "lng":"",
+  "area":"",
+  "address":"",
+  "tel":"",
+  "email":"",
+  "thumbnailImageUrl":"",
+  "google_map_url":"",
+  "url_line":"",
+  "url_order":"https://delicacy.maifood.com.tw/stores/$id",
+  "service_hours_text":"", // company.list.service_hours_text
+  "announcement":"", // company.list.pickup.delivery.description
+  "delivery_rules":"", // company.list.pickup.delivery.conditions
+  "business_hour":"",
+  "note":"", //DaiMai
+  "created_at": "", //now
+  "updated_at": "", //now
+  "menu": []
 }]

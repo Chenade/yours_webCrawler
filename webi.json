@@ -1,0 +1,127 @@
+{
+  "name": "拉亞中和景德店",
+  "lat": null,
+  "lng": null,
+  "address": "新北市中和區景德街88號",
+  "is_delivery": true,
+  "is_take_out": true,
+  "is_eat_in": true,
+  "is_enabled": true,
+  "image": "https://weiby-breakfast-store.s3.amazonaws.com/Weiby_Breakfast_Store_16802350964A37EB/image.png",
+  "work_time": {
+    "delivery": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "dine_in": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "qr_to_go": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "qr_dine_in": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "ship": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "store": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ],
+    "to_go": [
+      {
+        "weekday": "週一 ~ 週五",
+        "hour": [
+          "06:00 ~ 13:30"
+        ]
+      },
+      {
+        "weekday": "週六 ~ 週日",
+        "hour": [
+          "06:00 ~ 13:15"
+        ]
+      }
+    ]
+  },
+  "payment_methods": [
+    "cash",
+    "credit_card",
+    "line_pay"
+  ],
+  "store_link": "https://iding.tw/stores/162e04ba/menu",
+  "phone": "02-2940-1600",
+  "menu": [
+    {
+      "name": "1.起司厚牛貝果套餐",
+      "price": 104,
+      "food_image_url": "https://weiby-breakfast-store.s3.amazonaws.com/Weiby_Breakfast_Store_16802350964A37EB/16389588048D0924_1782e31c-01a5-4c99-a0d6-5455d2adcbfe_314_375_43.png",
+      "product_description": "🆕Beef & Cheese Burger",
+      "category_name": "⭐️超值套餐 Value Meal / 輕享套餐 Platter"
+    }
+  ]
+}

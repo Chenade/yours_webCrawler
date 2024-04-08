@@ -27,23 +27,21 @@ function parse($platform)
         }
 
         $menu = [];
-        foreach ($item['menu'] as $menu_item) {
+        foreach ($item['menu'] as $item) {
             $tag = $menu_item['category_name'];
-            foreach ($menu_item['items'] as $item) {
-                $name = mysqli_real_escape_string($conn, $item['title']);
-                $price = $item['price'];
-                $img = key_exists('food_image_url', $item) ? $item['food_image_url'] : null;
-                $description = key_exists('product_description', $item) ? mysqli_real_escape_string($conn, $item['product_description']) : null;
-                $menu[] = [
-                    "category_name" => $tag,
-                    "name" => $name,
-                    "price" => $price,
-                    "img" => $img,
-                    "description" => $description,
-                    "created_at" => date('Y-m-d H:i:s'),
-                    "updated_at" => date('Y-m-d H:i:s')
-                ];
-            }
+            $name = $item['name'];
+            $price = $item['price'];
+            $img = key_exists('food_image_url', $item) ? $item['food_image_url'] : null;
+            $description = key_exists('product_description', $item) ? $item['product_description'] : null;
+            $menu[] = [
+                "category_name" => $tag,
+                "name" => $name,
+                "price" => $price,
+                "img" => $img,
+                "description" => $description,
+                "created_at" => date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
+            ];
         }
         // Construct the parsed data for the current item
         $parsedItem = [
