@@ -36,24 +36,27 @@ function insertMeals($conn, $restaurant_id, $menu) {
 
         try{
             $conn->query($sql);
-
-            if ($min == -1 || $price < $min) {
-                $min = $price;
-            }
-            if ($price > $max) {
-                $max = $price;
-            }
-
         } catch (Exception $e) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        // if ($conn->query($sql) === TRUE) {
-        //     // Meal inserted successfully
-        // } else {
-        //     echo "Error: " . $sql . "<br>" . $conn->error;
-        // }
     }
-    $sql = 'UPDATE `restaurant` SET `min_price` = ' . $min . ', `max_price` = ' . $max . ' WHERE `id` = ' . $restaurant_id;
+
+    $meals_sql = "SELECT price FROM `meals` WHERE `rid` = " . $restaurant_id . " ORDER BY price";
+    $result = $conn->query($meals_sql);
+    if ($result->num_rows > 0) {
+        $min_index = floor($result->num_rows / 4) - 1;
+        $max_index = ceil($result->num_rows * 3 / 4) -1 ;
+        $result->data_seek($min_index);
+        $min = $result->fetch_all(MYSQLI_ASSOC)[0]['price'];
+        $result->data_seek($max_index);
+        $max = $result->fetch_all(MYSQLI_ASSOC)[0]['price'];
+    }
+    $sql = "UPDATE `restaurant` SET `min_price` = $min, `max_price` = $max WHERE `id` = $restaurant_id";
+    try{
+        $conn->query($sql);
+    } catch (Exception $e) {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
 
 // Function to insert data into the 'restaurant' table
@@ -86,7 +89,7 @@ function insertRestaurant($conn, $restaurant) {
 
     try {
         $conn->query($sql);
-        echo "$conn->insert_id: $name created successfully for meals\n";
+        echo "$conn->insert_id: $name created successfully.\n";
         return $conn->insert_id;
     } catch (Exception $e){
         echo "Error: " . $sql . "<br>" . $conn->error;
