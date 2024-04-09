@@ -22,7 +22,7 @@ function connectToDatabase() {
 function insertMeals($conn, $restaurant_id, $menu) {
     foreach ($menu as $item) {
         $tag = $item['category_name'];
-        $name = $item['title'];
+        $name = $item['name'];
         $price = $item['price'];
         $img = key_exists('img', $item) ? $item['img'] : null;
         $description = key_exists('description', $item) ? $item['description'] : null;
@@ -38,7 +38,6 @@ function insertMeals($conn, $restaurant_id, $menu) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
     }
-    echo "New records created successfully for meals\n";
 }
 
 // Function to insert data into the 'restaurant' table
@@ -52,13 +51,16 @@ function insertRestaurant($conn, $restaurant) {
     $service_hours_text = mysqli_real_escape_string($conn, $restaurant['service_hours_text']);
     $announcement = mysqli_real_escape_string($conn, $restaurant['announcement']);
     $delivery_rules = mysqli_real_escape_string($conn, $restaurant['delivery_rules']);
+    $thumbnailImageUrl = mysqli_real_escape_string($conn, $restaurant['thumbnailImageUrl']);
+    $note = mysqli_real_escape_string($conn, $restaurant['note']);
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`) 
-            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at')";
+    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, 'thumbnailImageUrl', 'note')
+            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note')";
 
     if ($conn->query($sql) === TRUE) {
+        echo "$conn->insert_id: $name created successfully for meals\n";
         return $conn->insert_id;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
