@@ -66,11 +66,10 @@ namespace ProductWebCrawler.Delicacies
                                 if(company.ContainsKey("response"))
                                 {
                                     storeInfo["data"]["company"] = company["response"];
+                                    string data = storeInfo["data"].ToString();
+                                    DataList.Add(data);
                                 }
 
-                                string data = storeInfo["data"].ToString();
-
-                                DataList.Add(data);
                             }
                         }
                     }

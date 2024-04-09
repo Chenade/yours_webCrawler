@@ -89,6 +89,28 @@ function insertRestaurant($conn, $restaurant) {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "Restaurant " . $restaurant['name'] . " already exists\n";
+        if ($result->num_rows > 1) {
+            echo "Error: Duplicate restaurant name\n";
+        } else {
+            $row = $result->fetch_assoc();
+            if (strlen($row['area']) > 3)
+            {
+                $area = substr($row['area'], 0, 3);
+                $sql = "UPDATE `restaurant` SET `area` = $area WHERE `id` = " . $row['id'];
+                $conn->query($sql);
+                echo "Updated area for " . $restaurant['name'] . "\n";
+            }
+            if ($row['lat'] == NULL || $row['lng'] == NULL || $row['area'] == NULL)
+            {
+                $google_map = get_lat_lng($restaurant['address']);
+                $lat = $google_map[0] ?? 0;
+                $lng = $google_map[1] ?? 0;
+                $area = $google_map[2] ?? null;
+                $sql = "UPDATE `restaurant` SET `lat` = $lat, `lng` = $lng, `area` = $area WHERE `id` = " . $row['id'];
+                $conn->query($sql);
+                echo "Updated lat, lng, area for " . $restaurant['name'] . "\n";
+            }
+        }
         return null;
     }
 
