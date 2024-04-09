@@ -61,6 +61,25 @@ function insertMeals($conn, $restaurant_id, $menu) {
     }
 }
 
+function get_lat_lng($address) {
+    $address = urlencode($address);
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=$key";
+    $response = file_get_contents($url);
+    $response = json_decode($response, true);
+    if ($response['status'] == 'OK') {
+        $lat = $response['results'][0]['geometry']['location']['lat'];
+        $lng = $response['results'][0]['geometry']['location']['lng'];
+        foreach ($response['results'][0]['address_components'] as $component) {
+            if (in_array('postal_code', $component['types'])) {
+                $area = intval($component['long_name']);
+                break;
+            }
+        }
+        return [$lat, $lng, $area];
+    }
+    return [null, null, null];
+}
+
 // Function to insert data into the 'restaurant' table
 function insertRestaurant($conn, $restaurant) {
     
@@ -85,9 +104,13 @@ function insertRestaurant($conn, $restaurant) {
     $note = mysqli_real_escape_string($conn, $restaurant['note']);
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
+    $google_map = get_lat_lng($address);
+    $lat = $google_map[0] ?? 0;
+    $lng = $google_map[1] ?? 0;
+    $area = $google_map[2] ?? null;
 
-    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `thumbnailImageUrl`, `note`)
-            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note')";
+    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `thumbnailImageUrl`, `note`, `lat`, `lng`, `area`)
+            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note', '$lat', '$lng', '$area')";
 
     try {
         $conn->query($sql);
