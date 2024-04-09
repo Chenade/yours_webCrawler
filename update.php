@@ -73,6 +73,7 @@ function insertRestaurant($conn, $restaurant) {
             VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note')";
 
     try {
+        $conn->query($sql);
         echo "$conn->insert_id: $name created successfully for meals\n";
         return $conn->insert_id;
     } catch (Exception $e){
@@ -82,7 +83,7 @@ function insertRestaurant($conn, $restaurant) {
 }
 
 // Main script
-$filename = "converted_data.json";
+$filename = "data.json";
 $jsonData = file_get_contents($filename);
 if ($jsonData === FALSE) {
     die("Error reading file $filename");
