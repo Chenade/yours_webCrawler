@@ -57,14 +57,14 @@ function insertRestaurant($conn, $restaurant) {
         return null;
     }
 
-    $business_registration = mysqli_real_escape_string($conn, $restaurant['business_registration']);
+    $business_registration = mysqli_real_escape_string($conn, json_encode($restaurant['business_registration'] ?? '', JSON_UNESCAPED_UNICODE));
     $uniform_numbers = mysqli_real_escape_string($conn, $restaurant['uniform_numbers']);
     $address = mysqli_real_escape_string($conn, $restaurant['address']);
     $tel = mysqli_real_escape_string($conn, $restaurant['tel']);
     $url_order = mysqli_real_escape_string($conn, $restaurant['url_order']);
     $service_hours_text = mysqli_real_escape_string($conn, $restaurant['service_hours_text']);
     $announcement = mysqli_real_escape_string($conn, $restaurant['announcement']);
-    $delivery_rules = mysqli_real_escape_string($conn, $restaurant['delivery_rules']);
+    $delivery_rules = mysqli_real_escape_string($conn, json_encode($restaurant['delivery_rules'] ?? '', JSON_UNESCAPED_UNICODE));
     $thumbnailImageUrl = mysqli_real_escape_string($conn, $restaurant['thumbnailImageUrl'] ?? '');
     $note = mysqli_real_escape_string($conn, $restaurant['note']);
     $created_at = date('Y-m-d H:i:s');
