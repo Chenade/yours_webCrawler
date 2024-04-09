@@ -2,7 +2,7 @@
 
 // Function to establish database connection
 function connectToDatabase() {
-    $servername = "db";
+    $servername = "127.0.0.1";
     $username = "develop";
     $password = "developer";
     $dbname = "yourshealth";
@@ -32,16 +32,29 @@ function insertMeals($conn, $restaurant_id, $menu) {
         $sql = "INSERT INTO `meals`(`rid`, `tag`, `name`, `price`, `img`, `description`, `created_at`, `updated_at`) 
                 VALUES ('$restaurant_id', '$tag', '$name', '$price', '$img', '$description', '$created_at', '$updated_at')";
 
-        if ($conn->query($sql) === TRUE) {
-            // Meal inserted successfully
-        } else {
+        try{
+            $conn->query($sql);
+        } catch (Exception $e) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
+        // if ($conn->query($sql) === TRUE) {
+        //     // Meal inserted successfully
+        // } else {
+        //     echo "Error: " . $sql . "<br>" . $conn->error;
+        // }
     }
 }
 
 // Function to insert data into the 'restaurant' table
 function insertRestaurant($conn, $restaurant) {
+
+    // ckeck if the restaurant exists with name
+    $sql = "SELECT * FROM `restaurant` WHERE `name` = '" . $restaurant['name'] . "'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "Restaurant " . $restaurant['name'] . " already exists\n";
+        return null;
+    }
     $name = mysqli_real_escape_string($conn, $restaurant['name']);
     $business_registration = mysqli_real_escape_string($conn, $restaurant['business_registration']);
     $uniform_numbers = mysqli_real_escape_string($conn, $restaurant['uniform_numbers']);
