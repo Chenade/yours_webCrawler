@@ -47,15 +47,16 @@ function insertMeals($conn, $restaurant_id, $menu) {
 
 // Function to insert data into the 'restaurant' table
 function insertRestaurant($conn, $restaurant) {
+    $name = mysqli_real_escape_string($conn, $restaurant['name']);
 
     // ckeck if the restaurant exists with name
-    $sql = "SELECT * FROM `restaurant` WHERE `name` = '" . $restaurant['name'] . "'";
+    $sql = "SELECT * FROM `restaurant` WHERE `name` = '" . $name . "'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "Restaurant " . $restaurant['name'] . " already exists\n";
         return null;
     }
-    $name = mysqli_real_escape_string($conn, $restaurant['name']);
+
     $business_registration = mysqli_real_escape_string($conn, $restaurant['business_registration']);
     $uniform_numbers = mysqli_real_escape_string($conn, $restaurant['uniform_numbers']);
     $address = mysqli_real_escape_string($conn, $restaurant['address']);
@@ -64,7 +65,7 @@ function insertRestaurant($conn, $restaurant) {
     $service_hours_text = mysqli_real_escape_string($conn, $restaurant['service_hours_text']);
     $announcement = mysqli_real_escape_string($conn, $restaurant['announcement']);
     $delivery_rules = mysqli_real_escape_string($conn, $restaurant['delivery_rules']);
-    $thumbnailImageUrl = mysqli_real_escape_string($conn, $restaurant['thumbnailImageUrl']);
+    $thumbnailImageUrl = mysqli_real_escape_string($conn, $restaurant['thumbnailImageUrl'] ?? '');
     $note = mysqli_real_escape_string($conn, $restaurant['note']);
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
