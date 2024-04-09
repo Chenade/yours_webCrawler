@@ -72,10 +72,10 @@ function insertRestaurant($conn, $restaurant) {
     $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, 'thumbnailImageUrl', 'note')
             VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note')";
 
-    if ($conn->query($sql) === TRUE) {
+    try {
         echo "$conn->insert_id: $name created successfully for meals\n";
         return $conn->insert_id;
-    } else {
+    } catch (Exception $e){
         echo "Error: " . $sql . "<br>" . $conn->error;
         return null;
     }
