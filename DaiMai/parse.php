@@ -27,11 +27,11 @@ function convertData($inputData) {
             $menu = [];
             foreach ($item['menu'] as $menu_item) {
                 $tag = $menu_item['category_name'];
-                foreach ($menu_item['items'] as $item) {
-                    $name = mysqli_real_escape_string($conn, $item['title']);
-                    $price = $item['price'];
-                    $img = key_exists('img', $item) ? $item['img'] : null;
-                    $description = key_exists('description', $item) ? mysqli_real_escape_string($conn, $item['description']) : null;
+                foreach ($menu_item['items'] as $_item) {
+                    $name = $_item['title'];
+                    $price = $_item['price'];
+                    $img = key_exists('img', $_item) ? $_item['img'] : null;
+                    $description = key_exists('description', $_item) ? $_item['description'] : null;
                     $menu[] = [
                         "category_name" => $tag,
                         "name" => $name,

@@ -63,6 +63,7 @@ function insertMeals($conn, $restaurant_id, $menu) {
 
 function get_lat_lng($address) {
     $address = urlencode($address);
+    $key = "AIzaSyACh3zPjvSzUjTFnCYg-cnXghcZfwK5R30";
     $url = "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=$key";
     $response = file_get_contents($url);
     $response = json_decode($response, true);
@@ -94,20 +95,22 @@ function insertRestaurant($conn, $restaurant) {
             echo "Error: Duplicate restaurant name\n";
         } else 
         {
-            $row = $result->fetch_assoc();
+		$row = $result->fetch_assoc();
+		echo $row['lat'] . "\n";
             if (strlen($row['area']) > 3)
             {
                 $area = substr($row['area'], 0, 3);
                 $sql = "UPDATE `restaurant` SET `area` = $area WHERE `id` = " . $row['id'];
                 $conn->query($sql);
                 echo "Updated area for " . $restaurant['name'] . "\n";
-            }
-            if ($row['lat'] == NULL || $row['lng'] == NULL || $row['area'] == NULL)
+	    }
+            if (is_null($row['lat']) || is_null($row['lng']) || is_null($row['area']))
+            //if ($row['lat'] == NULL || $row['lng'] == NULL || $row['area'] == NULL)
             {
                 $google_map = get_lat_lng($restaurant['address']);
                 $lat = $google_map[0] ?? 0;
                 $lng = $google_map[1] ?? 0;
-                $area = $google_map[2] ?? null;
+                $area = $google_map[2] ?? '';
                 $sql = "UPDATE `restaurant` SET `lat` = $lat, `lng` = $lng, `area` = $area WHERE `id` = " . $row['id'];
                 try{
                     $conn->query($sql);
