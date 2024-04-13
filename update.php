@@ -88,6 +88,7 @@ function get_lat_lng($address) {
     if ($response['status'] == 'OK') {
         $lat = $response['results'][0]['geometry']['location']['lat'];
         $lng = $response['results'][0]['geometry']['location']['lng'];
+        $area = null;
         foreach ($response['results'][0]['address_components'] as $component) {
             if (in_array('postal_code', $component['types'])) {
                 $area = intval($component['long_name']);
@@ -114,7 +115,6 @@ function insertRestaurant($conn, $restaurant) {
         } else 
         {
 		$row = $result->fetch_assoc();
-		echo $row['lat'] . "\n";
             if (strlen($row['area']) > 3)
             {
                 $area = substr($row['area'], 0, 3);
@@ -129,7 +129,8 @@ function insertRestaurant($conn, $restaurant) {
                 $lat = $google_map[0] ?? 0;
                 $lng = $google_map[1] ?? 0;
                 $area = $google_map[2] ?? '';
-                $sql = "UPDATE `restaurant` SET `lat` = $lat, `lng` = $lng, `area` = $area WHERE `id` = " . $row['id'];
+                $url_google_map = "https://www.google.com/maps/search/?api=1&query=$lat,$lng";
+                $sql = "UPDATE `restaurant` SET `lat` = $lat, `lng` = $lng, `area` = $area, `url_google_map` = '$url_google_map' WHERE `id` = " . $row['id'];
                 try{
                     $conn->query($sql);
                     echo "Updated lat, lng, area for " . $restaurant['name'] . "\n";
@@ -157,9 +158,10 @@ function insertRestaurant($conn, $restaurant) {
     $lat = $google_map[0] ?? 0;
     $lng = $google_map[1] ?? 0;
     $area = $google_map[2] ?? null;
+    $url_google_map = "https://www.google.com/maps/search/?api=1&query=$lat,$lng";
 
-    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `cover`, `note`, `lat`, `lng`, `area`)
-            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$cover', '$note', '$lat', '$lng', '$area')";
+    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `cover`, `note`, `lat`, `lng`, `area`, `url_google_map`)
+            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$cover', '$note', '$lat', '$lng', '$area', '$url_google_map')";
 
     try {
         $conn->query($sql);
