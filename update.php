@@ -46,7 +46,7 @@ function insertMeals($conn, $restaurant_id, $menu)
 
     $min = -1;
     $max = -1;
-    $meals_sql = "SELECT price FROM `meals` WHERE `rid` = " . $restaurant_id . " ORDER BY price WHERE `price` > 0";
+    $meals_sql = "SELECT price FROM `meals` WHERE `rid` = " . $restaurant_id . " AND `price` > 0 ORDER BY price" ;
     $result = $conn->query($meals_sql);
     if ($result->num_rows > 0)
     {

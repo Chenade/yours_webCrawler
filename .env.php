@@ -1,5 +1,5 @@
 <?php
 
-$key = "AIzaSyACh3zPjvSzUjTFnCYg-cnXghcZfwK5R30";
+global $key = "AIzaSyACh3zPjvSzUjTFnCYg-cnXghcZfwK5R30";
 
 ?>
