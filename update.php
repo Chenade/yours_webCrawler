@@ -82,7 +82,6 @@ function insertMeals($conn, $restaurant_id, $menu)
 
 function get_lat_lng($address) {
     $address = urlencode($address);
-    $key = "AIzaSyACh3zPjvSzUjTFnCYg-cnXghcZfwK5R30";
     $url = "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=$key";
     $response = file_get_contents($url);
     $response = json_decode($response, true);
