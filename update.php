@@ -23,9 +23,8 @@ function connectToDatabase() {
 // Function to insert data into the 'meals' table
 function insertMeals($conn, $restaurant_id, $menu)
 {    
-    $img = null;
+    $_img = null;
     foreach ($menu as $item) {
-        if ($item['img'] != '') $img = $item['img'];
         $tag =  mysqli_real_escape_string($conn, $item['category_name']);
         $name = mysqli_real_escape_string($conn, $item['name']);
         $price = intval($item['price']);
@@ -33,6 +32,7 @@ function insertMeals($conn, $restaurant_id, $menu)
         $description = key_exists('product_description', $item) ? mysqli_real_escape_string($conn, $item['product_description']) : null;
         $created_at = date('Y-m-d H:i:s');
         $updated_at = date('Y-m-d H:i:s');
+        if (!$_img) $_img = $img;
 
         $sql = "INSERT INTO `meals`(`rid`, `tag`, `name`, `price`, `img`, `description`, `created_at`, `updated_at`) 
                 VALUES ('$restaurant_id', '$tag', '$name', '$price', '$img', '$description', '$created_at', '$updated_at')";
