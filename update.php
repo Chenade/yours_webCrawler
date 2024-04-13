@@ -69,8 +69,8 @@ function insertMeals($conn, $restaurant_id, $menu)
         if ($result->num_rows > 0)
         {
             $row = $result->fetch_assoc();
-            if ($row['img'] == '') {
-                $sql = "UPDATE `restaurant` SET `img` = '$img' WHERE `id` = $restaurant_id";
+            if ($row['cover'] == '') {
+                $sql = "UPDATE `restaurant` SET `cover` = '$img' WHERE `id` = $restaurant_id";
                 $conn->query($sql);
             }
         } 
@@ -149,7 +149,7 @@ function insertRestaurant($conn, $restaurant) {
     $service_hours_text = mysqli_real_escape_string($conn, $restaurant['service_hours_text']);
     $announcement = mysqli_real_escape_string($conn, $restaurant['announcement']);
     $delivery_rules = mysqli_real_escape_string($conn, json_encode($restaurant['delivery_rules'] ?? '', JSON_UNESCAPED_UNICODE));
-    $thumbnailImageUrl = mysqli_real_escape_string($conn, $restaurant['thumbnailImageUrl'] ?? '/images/meals-table.png'); 
+    $cover = mysqli_real_escape_string($conn, $restaurant['cover'] ?? '/images/meals-table.png'); 
     $note = mysqli_real_escape_string($conn, $restaurant['note']);
     $created_at = date('Y-m-d H:i:s');
     $updated_at = date('Y-m-d H:i:s');
@@ -158,8 +158,8 @@ function insertRestaurant($conn, $restaurant) {
     $lng = $google_map[1] ?? 0;
     $area = $google_map[2] ?? null;
 
-    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `thumbnailImageUrl`, `note`, `lat`, `lng`, `area`)
-            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$thumbnailImageUrl', '$note', '$lat', '$lng', '$area')";
+    $sql = "INSERT INTO `restaurant`(`name`, `business_registration`, `uniform_numbers`, `address`, `tel`, `url_order`, `service_hours_text`, `announcement`, `delivery_rules`, `created_at`, `updated_at`, `cover`, `note`, `lat`, `lng`, `area`)
+            VALUES ('$name', '$business_registration', '$uniform_numbers', '$address', '$tel', '$url_order', '$service_hours_text', '$announcement', '$delivery_rules', '$created_at', '$updated_at', '$cover', '$note', '$lat', '$lng', '$area')";
 
     try {
         $conn->query($sql);
